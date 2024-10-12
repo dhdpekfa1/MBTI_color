@@ -1,11 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ColorSurvey from "../components/ColorSurvey";
-import mockData from "../../mock.json";
+import axios from "../apis/index";
 import styles from "./Home.module.css";
 
 const Home = () => {
+  const [items, setItems] = useState([]);
   const [filter, setFilter] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchData(filter);
+  }, [filter]);
+
+  const fetchData = async (mbti: string | null) => {
+    const res = await axios.get("/color-surveys/", {
+      params: { mbti, limit: 20 },
+    });
+
+    setItems(res.data.results);
+  };
 
   return (
     <div className={styles.container}>
@@ -34,7 +47,7 @@ const Home = () => {
           + 새 컬러 등록하기
         </Link>
         <ul className={styles.items}>
-          {mockData.results.map((item) => (
+          {items.map((item) => (
             <li key={item.id}>
               <ColorSurvey value={item} onClick={() => setFilter(item.mbti)} />
             </li>

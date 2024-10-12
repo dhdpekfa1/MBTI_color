@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ColorInput from "../components/ColorInput";
 import Button from "../components/Button";
 import MBTISelect from "../components/MBTISelect";
 import generateColorCode from "../utils/generateColorCode";
+import axios from "../apis/index";
 import styles from "./New.module.css";
 
 const New = () => {
@@ -18,17 +19,20 @@ const New = () => {
       [name]: value,
     }));
   };
+  const navigate = useNavigate();
 
   const handleRandomClick = () => {
     const nextColorCode = generateColorCode();
     handleChange("colorCode", nextColorCode);
   };
 
-  function handleSubmit() {
-    /** @FIXME */
-    console.log(formValue);
+  async function handleSubmit() {
+    await axios.post("/color-surveys/", {
+      ...formValue,
+      password: "0000",
+    });
+    navigate("/");
   }
-
   return (
     <div className={styles.container}>
       <header className={styles.header}>
