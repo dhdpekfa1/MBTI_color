@@ -20,3 +20,12 @@ export interface OptionGroups {
   value: string;
   label: string;
 }
+
+export interface ColorSurveyProps {
+  value: {
+    id: string | number;
+    mbti: string;
+    colorCode: string;
+  };
+  onClick: () => void;
+}

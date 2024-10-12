@@ -1,7 +1,47 @@
-import React from "react";
-import MBTIOptionGroup from "./MBTIOptionGroup";
 import { optionGroups } from "../utils/helper";
-import { MBTISelectProps } from "../types/new";
+import styles from "./MBTISelect.module.css";
+
+import {
+  MBTISelectProps,
+  MBTIOptionProps,
+  MBTIOptionGroupProps,
+} from "../types/new";
+
+const MBTIOption: React.FC<MBTIOptionProps> = ({
+  selected,
+  label,
+  value,
+  onClick,
+}) => {
+  const classNames = `${styles.mbtiOption} ${selected ? styles.selected : ""}`;
+
+  return (
+    <div className={classNames} onClick={onClick}>
+      <span className={styles.char}>{value}</span>
+      {label}
+    </div>
+  );
+};
+
+const MBTIOptionGroup: React.FC<MBTIOptionGroupProps> = ({
+  options,
+  value,
+  onChange,
+}) => {
+  return (
+    <div className={styles.mbtiOptionGroup}>
+      {options.map((option) => (
+        <MBTIOption
+          key={option.value}
+          selected={option.value === value}
+          label={option.label}
+          value={option.value}
+          onClick={() => onChange(option.value)}
+        />
+      ))}
+    </div>
+  );
+};
 
 const MBTISelect: React.FC<MBTISelectProps> = ({
   value = "ESTJ",
