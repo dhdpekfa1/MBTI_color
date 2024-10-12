@@ -1,6 +1,13 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Pretendard", sans-serif;
+  font-size: 24px;
+  color: #464e5e;
+}
 
 body {
-  font-family: "Pretendard", sans-serif;
-  font-size: 100%;
+  margin: 0;
 }
